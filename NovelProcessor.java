@@ -68,7 +68,7 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
         String outputFileName = novelFileName.substring(0, novelFileName.lastIndexOf('.')) + "_wc.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName))) {
             for (String pattern : counts.keySet()) {
-                bw.write(pattern + "|" + counts.get(pattern) + "\n");
+                bw.write(" Count of pattern matches by this regular expression --> " + patterns.get(pattern) + " --> " + counts.get(pattern) + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
  
     private static int countOccurrences(String line, String pattern) {
         int count = 0;
-        System.out.println("Pattern is: " + pattern); // Print pattern for debugging
+        //System.out.println("Pattern is: " + pattern); // Print pattern for debugging
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(line);
         while (m.find()) {
