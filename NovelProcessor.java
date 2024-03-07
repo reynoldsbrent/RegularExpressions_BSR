@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,13 +26,27 @@ public class NovelProcessor {
         try (BufferedReader br = new BufferedReader(new FileReader(patternFileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\\|");
+                String[] parts = line.split(" ");
                 patterns.put(parts[0], parts[1]);
             }
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
+
+
+
+
+        // Using a for-each loop
+for (Map.Entry<String, String> entry : patterns.entrySet()) {
+    String word = entry.getKey();
+    String regexPattern = entry.getValue();
+    System.out.println("Word: " + word + ", Regular Expression: " + regexPattern);
+}
+
+ 
+
+
 
         // Process the novel file
         HashMap<String, Integer> counts = new HashMap<>();
@@ -40,7 +55,7 @@ public class NovelProcessor {
             while ((line = br.readLine()) != null) {
                 for (String pattern : patterns.keySet()) {
                     int count = counts.getOrDefault(pattern, 0);
-                    count += countOccurrences(line, pattern);
+                    count += countOccurrences(line, patterns.get(pattern)); // Pass the pattern from the map, not the key
                     counts.put(pattern, count);
                 }
             }
@@ -59,16 +74,19 @@ public class NovelProcessor {
             e.printStackTrace();
         }
 
-        System.out.println("Processing complete. Output written to " + outputFileName);
+        System.out.println("Processing complete. Output written to " + outputFileName); 
     }
-
+ 
     private static int countOccurrences(String line, String pattern) {
         int count = 0;
+        System.out.println("Pattern is: " + pattern); // Print pattern for debugging
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(line);
         while (m.find()) {
             count++;
         }
         return count;
+        
     }
+     
 }
