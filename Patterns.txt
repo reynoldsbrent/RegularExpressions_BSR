@@ -1,0 +1,7 @@
+Gloomy (?i)\b(?:gloom(?:iness|ier|iest|ily|y|ed)?)\b
+Haunting (?i)\b(?:haunt(?:s|ed|ing|ingly)?)\b
+Mysterious (?i)\b(?:myster(?:ious|y|ies|iously)?)\b
+Foreboding (?i)\b(?:forebod(?:ing|ings|e|ed|es|ingly)?)\b
+Melancholic (?i)\b(?:melanchol(?:ic|y)?)\b
+Terror (?i)\b(?:terr(?:or|ors|orize|orized|orizes|orizing)?)\b
+Desolate (?i)\b(?:desolat(?:e|ion|ely)?)\b
