@@ -11,9 +11,8 @@ import java.util.regex.Pattern;
 public class NovelProcessor {
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.println("Run the program again and use the following format: NovelProcessor <novel_file> <pattern_file>");
-            System.out.println("The following novel files are available: Frankenstein, Dracula, DrJekyllMrHyde, ThePictureOfDorianGray, TheCastleOfOtranto, and TheTurnOfTheScrew");
-            System.out.println("Add the .txt extension to the novel file name");
+            System.out.println("Run the program again and use the following format from the command line: java NovelProcessor novel_text.txt pattern_file.txt");
+            System.out.println("Make sure to add the .txt extension to the novel file name");
             System.out.println("Example: java NovelProcessor Dracula.txt Patterns.txt");
             return;
         }
@@ -37,13 +36,14 @@ public class NovelProcessor {
 
 
 
-        // Using a for-each loop
+        // Print the patterns for debugging 
+        /*
 for (Map.Entry<String, String> entry : patterns.entrySet()) {
     String word = entry.getKey();
     String regexPattern = entry.getValue();
-    System.out.println("Word: " + word + ", Regular Expression: " + regexPattern);
+    System.out.println("Word: " + word + ", Regular Expression: " + regexPattern); // For debugging
 }
-
+*/
  
 
 
@@ -68,7 +68,7 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
         String outputFileName = novelFileName.substring(0, novelFileName.lastIndexOf('.')) + "_wc.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName))) {
             for (String pattern : counts.keySet()) {
-                bw.write(" Count of pattern matches by this regular expression --> " + patterns.get(pattern) + " --> " + counts.get(pattern) + "\n");
+                bw.write(patterns.get(pattern) + " | " + counts.get(pattern) + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
  
     private static int countOccurrences(String line, String pattern) {
         int count = 0;
-        //System.out.println("Pattern is: " + pattern); // Print pattern for debugging
+        //System.out.println("Pattern is: " + pattern); // For debugging
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(line);
         while (m.find()) {
