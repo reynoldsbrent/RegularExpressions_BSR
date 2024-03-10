@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * This class searches a log file and stores unique IP addresses or usernames and their counts in a Hashmap.
  * It provides methods to return the size of each hashmap and print their contents.
- * @author Your Name
+ * @author Brent Reynolds
  * @version 1.0
  * Assignment 4
  * CS322 - Compiler Construction
@@ -42,19 +42,19 @@ public class LogFileProcessor {
                 String ipRegex = "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b";
                 Pattern ipPattern = Pattern.compile(ipRegex);
                 Matcher ipMatcher = ipPattern.matcher(line);
-
+    
                 while (ipMatcher.find()) {
                     String ipAddress = ipMatcher.group();
                     ipAddresses.put(ipAddress, ipAddresses.getOrDefault(ipAddress, 0) + 1);
                 }
-
-                // Regular expression for matching usernames
-                String usernameRegex = "\\b[a-zA-Z0-9_-]+\\b";
+    
+                // Regular expression for matching valid usernames after "user" 
+                String usernameRegex = "\\buser\\s(?!\\d+\\.\\d+\\.\\d+\\.\\d+)(\\w+)\\b";
                 Pattern usernamePattern = Pattern.compile(usernameRegex);
                 Matcher usernameMatcher = usernamePattern.matcher(line);
-
+    
                 while (usernameMatcher.find()) {
-                    String username = usernameMatcher.group();
+                    String username = usernameMatcher.group(1);
                     usernames.put(username, usernames.getOrDefault(username, 0) + 1);
                 }
             }
@@ -62,9 +62,11 @@ public class LogFileProcessor {
             e.printStackTrace();
         }
     }
+    
+    
 
     /**
-     * Prints the results based on the printFlag.
+     * Prints the results based on the printFlag 0, 1, or 2. If any other value is passed, it defaults to 0.
      * @param printFlag Flag to determine printing behavior.
      */
     private void printResults(int printFlag) {
