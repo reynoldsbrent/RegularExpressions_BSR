@@ -1,3 +1,12 @@
+/**
+ * NovelProcessor class processes a novel text file using patterns provided in the patterns file.
+ * It counts occurrences of each pattern in the novel and writes the counts to an output file.
+ * @author Brent Reynolds
+ * @version 1.0
+ * Assignment 4
+ * CS322 - Compiler Construction
+ * Spring 2024
+ */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -9,6 +18,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NovelProcessor {
+    /**
+     * Main method to execute the novel processing.
+     * @param args Command-line arguments: novel file name and pattern file name.
+     */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Run the program again and use the following format from the command line: java NovelProcessor novel_text.txt pattern_file.txt");
@@ -20,7 +33,7 @@ public class NovelProcessor {
         String novelFileName = args[0];
         String patternFileName = args[1];
 
-        // Read patterns from the pattern file
+        // Read patterns from pattern file
         HashMap<String, String> patterns = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(patternFileName))) {
             String line;
@@ -36,26 +49,26 @@ public class NovelProcessor {
 
 
 
-        // Print the patterns for debugging 
+        // For debugging 
         /*
 for (Map.Entry<String, String> entry : patterns.entrySet()) {
     String word = entry.getKey();
     String regexPattern = entry.getValue();
-    System.out.println("Word: " + word + ", Regular Expression: " + regexPattern); // For debugging
+    System.out.println("Word: " + word + ", Regular Expression: " + regexPattern); 
 }
 */
  
 
 
 
-        // Process the novel file
+        // Process novel files and count occurrences of each pattern
         HashMap<String, Integer> counts = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(novelFileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 for (String pattern : patterns.keySet()) {
                     int count = counts.getOrDefault(pattern, 0);
-                    count += countOccurrences(line, patterns.get(pattern)); // Pass the pattern from the map, not the key
+                    count += countOfPatternsOccurence(line, patterns.get(pattern)); 
                     counts.put(pattern, count);
                 }
             }
@@ -64,7 +77,7 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
             return;
         }
 
-        // Write counts to output file
+        // Write pattern counts to output file 
         String outputFileName = novelFileName.substring(0, novelFileName.lastIndexOf('.')) + "_wc.txt";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName))) {
             for (String pattern : counts.keySet()) {
@@ -77,7 +90,13 @@ for (Map.Entry<String, String> entry : patterns.entrySet()) {
         System.out.println("Processing complete. Output written to " + outputFileName); 
     }
  
-    private static int countOccurrences(String line, String pattern) {
+    /**
+     * Counts the number of occurrences of a pattern in a line of text.
+     * @param line The line to search for pattern occurrences.
+     * @param pattern The pattern to search for.
+     * @return The count of occurrences of the pattern in the line.
+     */
+    private static int countOfPatternsOccurence(String line, String pattern) {
         int count = 0;
         //System.out.println("Pattern is: " + pattern); // For debugging
         Pattern p = Pattern.compile(pattern);

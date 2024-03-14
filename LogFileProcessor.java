@@ -21,7 +21,7 @@ public class LogFileProcessor {
     /**
      * Constructor for LogFileProcessor class.
      * @param filename The name of the log file to process.
-     * @param printFlag Flag to determine printing behavior.
+     * @param printFlag Flag to determine printing output.
      */
     public LogFileProcessor(String filename, int printFlag) {
         ipAddresses = new HashMap<>();
@@ -48,7 +48,7 @@ public class LogFileProcessor {
                     ipAddresses.put(ipAddress, ipAddresses.getOrDefault(ipAddress, 0) + 1);
                 }
     
-                // Regular expression for matching valid usernames after "user" 
+                // Regular expression for matching usernames after the word "user" 
                 String usernameRegex = "\\buser\\s(?!\\d+\\.\\d+\\.\\d+\\.\\d+)(\\w+)\\b";
                 Pattern usernamePattern = Pattern.compile(usernameRegex);
                 Matcher usernameMatcher = usernamePattern.matcher(line);
@@ -67,7 +67,7 @@ public class LogFileProcessor {
 
     /**
      * Prints the results based on the printFlag 0, 1, or 2. If any other value is passed, it defaults to 0.
-     * @param printFlag Flag to determine printing behavior.
+     * @param printFlag Flag to determine printing output.
      */
     private void printResults(int printFlag) {
         switch (printFlag) {
